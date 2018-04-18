@@ -1,7 +1,7 @@
 {
-  "name": "swagger-ui-express",
+  "name": "swagger-ui-restify",
   "version": "3.0.8",
-  "description": "Swagger UI Express",
+  "description": "Swagger UI Restify",
   "main": "./lib/index.js",
   "files": [
     "static",
@@ -12,37 +12,37 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*"
+    "test": "./node_modules/.bin/mocha test"
   },
   "keywords": [
     "swagger",
-    "express",
+    "restify",
     "ui",
     "json",
     "documentation"
   ],
   "private": false,
   "engines": {
-    "node": ">= v0.10.32"
+    "node": ">= v6.9.1"
   },
   "devDependencies": {
     "es6-shim": "0.35.2",
-    "express": "4.12.2",
+    "restify": "5.0.0",
     "mocha": "2.2.5",
     "phantom": "2.1.21"
   },
   "author": {
-    "name": "Stephen Scott",
-    "email": "scottie1984@gmail.com"
+    "name": "Brad van der Laan",
+    "email": "brad.vanderlaan@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:scottie1984/swagger-ui-express.git"
+    "url": "git@github.com:bvanderlaan/swagger-ui-restify.git"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/scottie1984/swagger-ui-express/issues"
+    "url": "https://github.com/bvanderlaan/swagger-ui-restify/issues"
   },
-  "homepage": "https://github.com/scottie1984/swagger-ui-express"
+  "homepage": "https://github.com/bvanderlaan/swagger-ui-restify"
 }
