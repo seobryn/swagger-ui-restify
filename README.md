@@ -44,7 +44,8 @@ const swaggerUi = require('swagger-ui-restify');
 const swaggerDocument = require('./swagger.json');
 
 var options = {
-  explorer : true
+  explorer : true,
+  baseURL: 'api-docs',
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
@@ -63,7 +64,8 @@ const swaggerDocument = require('./swagger.json');
 var options = {
 	swaggerOptions: {
     validatorUrl : null
-  }
+  },
+  baseURL: 'api-docs',
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
@@ -82,7 +84,8 @@ const swaggerUi = require('swagger-ui-restify');
 const swaggerDocument = require('./swagger.json');
 
 var options = {
-  customCss: '.swagger-ui .topbar { display: none }'
+  customCss: '.swagger-ui .topbar { display: none }',
+  baseURL: 'api-docs',
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
@@ -100,7 +103,8 @@ const swaggerUi = require('swagger-ui-restify');
 const swaggerDocument = require('./swagger.json');
 
 var options = {
-  customJs: '/custom.js'
+  customJs: '/custom.js',
+  baseURL: 'api-docs',
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
@@ -118,7 +122,8 @@ const swaggerUi = require('swagger-ui-restify');
 const swaggerDocument = require('./swagger.json');
 
 var options = {
-  swaggerUrl: 'http://petstore.swagger.io/v2/swagger.json'
+  swaggerUrl: 'http://petstore.swagger.io/v2/swagger.json',
+  baseURL: 'api-docs',
 }
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, options));
@@ -137,7 +142,7 @@ const swaggerUi = require('swagger-ui-restify');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { baseURL: 'api-docs' }));
 ```
 
 
