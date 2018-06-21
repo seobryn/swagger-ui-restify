@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var restify = require('restify');
+var swaggerUi = require('swagger-ui-dist');
 
 var favIconHtml = '<link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />' +
                   '<link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />'
@@ -96,6 +97,18 @@ var swaggerInitFunction = function (swaggerDoc, opts) {
   }
 }
 
+var swaggerAssetMiddleware = (options = {}) => {
+  var staticServer = restify.plugins.serveStatic(Object.assign({ directory: swaggerUi.getAbsoluteFSPath(), appendRequestPath: false }, options));
+
+  return (req, res, next) => {
+    if(/(\/|index\.html)$/.test(req.path)) {
+      return next()
+    } else {
+      return staticServer(req, res, next)
+    }
+  }
+}
+
 var serveFiles = function (swaggerDoc, opts) {
   opts = opts || {}
   var initOptions = {
@@ -104,16 +117,12 @@ var serveFiles = function (swaggerDoc, opts) {
     swaggerUrl: opts.swaggerUrl || {}
   }
   var swaggerInitWithOpts = swaggerInitFunction(swaggerDoc, initOptions)
-  return [swaggerInitWithOpts, restify.plugins.serveStatic({ directory: `${__dirname}/static`, appendRequestPath: false })]
+
+  return [swaggerInitWithOpts, swaggerAssetMiddleware()]
 }
 
-var serve = [swaggerInitFn, restify.plugins.serveStatic({ directory: `${__dirname}/static`, appendRequestPath: false })];
-var serveWithOptions = (options) => {
-  return [
-    swaggerInitFn,
-    restify.plugins.serveStatic(Object.assign({ directory: `${__dirname}/static`, appendRequestPath: false }, options )),
-  ];
-};
+var serve = [swaggerInitFn, swaggerAssetMiddleware()];
+var serveWithOptions = options => [swaggerInitFn, swaggerAssetMiddleware(options)];
 
 var stringify = function (obj, prop) {
   var placeholder = '____FUNCTIONPLACEHOLDER____';

@@ -4,7 +4,6 @@
   "description": "Swagger UI Restify",
   "main": "./lib/index.js",
   "files": [
-    "static",
     "package.json",
     "index.js",
     "indexTemplate.html",
@@ -24,6 +23,9 @@
   "private": false,
   "engines": {
     "node": ">= v6.9.1"
+  },
+  "dependencies": {
+    "swagger-ui-dist": "^3.17.1"
   },
   "devDependencies": {
     "es6-shim": "0.35.2",
