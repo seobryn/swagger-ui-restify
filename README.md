@@ -6,9 +6,11 @@ Swagger version is pulled from npm module swagger-ui-dist. Please use a lock fil
 
 ## Usage
 
-In app's `package.json`
+Install using npm:
 
-    "swagger-ui-restify": "latest" // or desired version
+```bash
+$ npm install --save swagger-ui-restify
+```
 
 Restify setup `app.js`
 ```javascript
