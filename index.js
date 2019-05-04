@@ -9,7 +9,7 @@ var favIconHtml = '<link rel="icon" type="image/png" href="./favicon-32x32.png" 
 
 var swaggerInit
 
-var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customeSiteTitle) {
+var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customSiteTitle) {
   var isExplorer
   var customJs
   var swaggerUrls
@@ -23,7 +23,7 @@ var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon
     swaggerUrl = opts.swaggerUrl
     swaggerUrls = opts.swaggerUrls
     isExplorer = opts.explorer || !!swaggerUrls
-    customeSiteTitle = opts.customSiteTitle
+    customSiteTitle = opts.customSiteTitle
     baseURL = opts.baseURL
   } else {
     //support legacy params based function
@@ -33,7 +33,7 @@ var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon
   var explorerString = isExplorer ? '' : '.swagger-ui .topbar .download-url-wrapper { display: none }';
     customCss = explorerString + ' ' + customCss || explorerString;
     customfavIcon = customfavIcon || false;
-    customeSiteTitle = customeSiteTitle || 'Swagger UI';
+    customSiteTitle = customSiteTitle || 'Swagger UI';
 	var html = fs.readFileSync(__dirname + '/indexTemplate.html.tpl');
     try {
     	fs.unlinkSync(__dirname + '/index.html');
@@ -55,11 +55,11 @@ var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon
     }
     var js = fs.readFileSync(__dirname + '/swagger-ui-init.js.tpl');
     swaggerInit = js.toString().replace('<% swaggerOptions %>', stringify(initOptions))
-    return htmlWithCustomJs.replace('<% title %>', customeSiteTitle)
+    return htmlWithCustomJs.replace('<% title %>', customSiteTitle)
 }
 
-var setup = function (swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customeSiteTitle) {
-    var htmlWithOptions = generateHTML(swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customeSiteTitle)
+var setup = function (swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customSiteTitle) {
+    var htmlWithOptions = generateHTML(swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customSiteTitle)
     return function (req, res) {
       res.writeHead(200, {
         'Content-Length': Buffer.byteLength(htmlWithOptions),
