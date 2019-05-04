@@ -105,7 +105,7 @@ var swaggerAssetMiddleware = (options = {}) => {
   var staticServer = restify.plugins.serveStatic(Object.assign({ directory: swaggerUi.getAbsoluteFSPath(), appendRequestPath: false }, options));
 
   return (req, res, next) => {
-    if(/(\/|index\.html)$/.test(req.path)) {
+    if(/(\/|index\.html)$/.test(req.path())) {
       return next()
     } else {
       return staticServer(req, res, next)
