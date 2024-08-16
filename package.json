@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "type": "module",
   "description": "Swagger UI Restify",
-  "main": "./lib/index.mjs",
+  "main": "./index.mjs",
   "files": [
     "package.json",
     "index.mjs",
@@ -35,8 +35,8 @@
     "phantom": "2.1.21"
   },
   "author": {
-    "name": "Brad van der Laan",
-    "email": "brad.vanderlaan@gmail.com"
+    "name": "Jose Joya",
+    "email": "ing.jose.joya@gmail.com"
   },
   "repository": {
     "type": "git",
