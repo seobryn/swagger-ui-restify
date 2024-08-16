@@ -1,11 +1,12 @@
 {
   "name": "swagger-ui-restify",
-  "version": "4.0.2",
+  "version": "5.0.0",
+  "type": "module",
   "description": "Swagger UI Restify",
-  "main": "./lib/index.js",
+  "main": "./lib/index.mjs",
   "files": [
     "package.json",
-    "index.js",
+    "index.mjs",
     "indexTemplate.html.tpl",
     "swagger-ui-init.js.tpl",
     "LICENSE"
@@ -39,12 +40,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bvanderlaan/swagger-ui-restify.git"
+    "url": "git@github.com:seobryn/swagger-ui-restify.git"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/bvanderlaan/swagger-ui-restify/issues"
+    "url": "https://github.com/seobryn/swagger-ui-restify/issues"
   },
-  "homepage": "https://github.com/bvanderlaan/swagger-ui-restify"
+  "homepage": "https://github.com/seobryn/swagger-ui-restify"
 }

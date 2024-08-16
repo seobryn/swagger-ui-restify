@@ -1,11 +1,12 @@
-var restify = require('restify');
-var app = restify.createServer({
-  strictRouting: true,
-});
-var swaggerUi = require('../../index');
-var swaggerDocument = require('./swagger.json');
+import restify from 'restify';
+import swaggerUi from '../../index.mjs';
+import swaggerDocument from './swagger.json' assert {type: 'json'}
+import swaggerDocumentSplit from './swagger-split.json'  assert {type: 'json'}
 
-var swaggerDocumentSplit = require('./swagger-split.json');
+var app = restify.createServer({
+	strictRouting: true,
+});
+
 
 app.use((req, res, next) => {
 	if (req.url === '/favicon.ico') {
@@ -18,31 +19,31 @@ app.use((req, res, next) => {
 });
 
 var options = {
-	validatorUrl : null,
+	validatorUrl: null,
 	oauth: {
-	 clientId: "your-client-id1",
-	 clientSecret: "your-client-secret-if-required1",
-	 realm: "your-realms1",
-	 appName: "your-app-name1",
-	 scopeSeparator: ",",
-	 additionalQueryStringParams: {}
- },
- docExpansion: 'full',
- operationsSorter: function (a, b) {
-	 var score = {
-		 '/test': 1,
-		 '/bar': 2
-	 }
-	 console.log('a', a.get("path"), b.get("path"))
-	 return score[a.get("path")] < score[b.get("path")]
- }
+		clientId: "your-client-id1",
+		clientSecret: "your-client-secret-if-required1",
+		realm: "your-realms1",
+		appName: "your-app-name1",
+		scopeSeparator: ",",
+		additionalQueryStringParams: {}
+	},
+	docExpansion: 'full',
+	operationsSorter: function (a, b) {
+		var score = {
+			'/test': 1,
+			'/bar': 2
+		}
+		console.log('a', a.get("path"), b.get("path"))
+		return score[a.get("path")] < score[b.get("path")]
+	}
 };
 
-app.post('/test', function(req, res) {
+app.post('/test', function (req, res) {
 	console.log('req', req)
-	res.json({ status: 'OK'});
+	res.json({ status: 'OK' });
 });
-app.get('/bar', function(req, res) { res.json({ status: 'OKISH'}); });
+app.get('/bar', function (req, res) { res.json({ status: 'OKISH' }); });
 
 app.get(/\/api-docs\/+.*/, ...swaggerUi.serve)
 app.get('/api-docs', swaggerUi.setup(swaggerDocument, { baseURL: 'api-docs' }, options, '.swagger-ui .topbar { background-color: red }'));
@@ -53,8 +54,8 @@ app.get('/api-docs-from-url', swaggerUi.setup(null, { baseURL: 'api-docs-from-ur
 var swaggerUiOpts = {
 	explorer: false,
 	swaggerOptions: options,
-  customCss: '.swagger-ui .topbar { background-color: blue }',
-  baseURL: 'api-docs-using-object'
+	customCss: '.swagger-ui .topbar { background-color: blue }',
+	baseURL: 'api-docs-using-object'
 }
 
 app.get(/\/api-docs-using-object\/+.*/, ...swaggerUi.serve)
@@ -92,16 +93,16 @@ var swaggerHtml = swaggerUi.generateHTML(swaggerDocument, Object.assign({}, swag
 
 app.get(/\/api-docs-html1\/+.*/, ...swaggerUi.serveFiles(swaggerDocument, swaggerUiOpts))
 app.get('/api-docs-html1', (req, res) => {
-  res.writeHead(200, {
-    'Content-Length': Buffer.byteLength(swaggerHtml),
-    'Content-Type': 'text/html'
-  });
-  res.write(swaggerHtml);
-  res.end();
+	res.writeHead(200, {
+		'Content-Length': Buffer.byteLength(swaggerHtml),
+		'Content-Type': 'text/html'
+	});
+	res.write(swaggerHtml);
+	res.end();
 });
 
-app.use(function(req, res) {
-    res.send(404, 'Page not found');
+app.use(function (req, res) {
+	res.send(404, 'Page not found');
 });
 
-module.exports = app;
+export default app;
