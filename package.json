@@ -1,5 +1,5 @@
 {
-  "name": "swagger-ui-restify",
+  "name": "swagger-ui-restify-esm",
   "version": "5.0.0",
   "type": "module",
   "description": "Swagger UI Restify",
