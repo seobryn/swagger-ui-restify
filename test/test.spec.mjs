@@ -52,6 +52,7 @@ describe('integration', function () {
         });
       })
       .then(function (html) {
+        console.log(html);
         assert.ok(html);
         assert.notEqual(html.indexOf('id="operations-/test-index"'), -1);
         assert.notEqual(html.indexOf('id="operations-/test-impossible"'), -1);
