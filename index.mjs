@@ -1,5 +1,7 @@
 'use strict'
 
+let __dirname = import.meta.dirname;
+
 import fs from 'fs'
 import restify from 'restify'
 import swaggerUi from 'swagger-ui-dist'
