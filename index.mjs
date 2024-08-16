@@ -1,6 +1,9 @@
 'use strict'
 
-let __dirname = import.meta.dirname;
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import fs from 'fs'
 import restify from 'restify'
