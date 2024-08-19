@@ -1,12 +1,13 @@
 {
   "name": "swagger-ui-restify-esm",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "type": "module",
   "description": "Swagger UI Restify",
   "main": "./index.mjs",
   "files": [
     "package.json",
     "index.mjs",
+    "utils/fs-utils.mjs",
     "indexTemplate.html.tpl",
     "swagger-ui-init.js.tpl",
     "LICENSE"
