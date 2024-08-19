@@ -3,18 +3,17 @@ import swaggerUi from '../../index.mjs';
 import swaggerDocument from './swagger.json' assert {type: 'json'}
 import swaggerDocumentSplit from './swagger-split.json'  assert {type: 'json'}
 
-var app = restify.createServer({
-	strictRouting: true,
-});
+var app = restify.createServer({});
 
+app.use(restify.plugins.bodyParser());
 
 app.use((req, res, next) => {
 	if (req.url === '/favicon.ico') {
-		res.sendFile(__dirname + '/favicon.ico');
+		return res.sendFile(dName + '/favicon.ico');
 	} else if (req.url === '/swagger.json') {
-		res.sendFile(__dirname + '/swagger.json');
+		return res.sendFile(dName + '/swagger.json');
 	} else {
-		next();
+		next(false);
 	}
 });
 
@@ -39,27 +38,30 @@ var options = {
 	}
 };
 
-app.post('/test', function (req, res) {
-	console.log('req', req)
-	res.json({ status: 'OK' });
+app.post('/test', (req, res, next) => {
+	res.send(200, { status: 'OK' });
+	return next(false)
 });
-app.get('/bar', function (req, res) { res.json({ status: 'OKISH' }); });
+app.get('/bar', (req, res, next) => {
+	res.send({ status: 'OKISH' });
+	return next(false)
+});
 
 app.get('/api-docs/*', ...swaggerUi.serve)
-app.get('/api-docs', swaggerUi.setup(swaggerDocument, { baseURL: 'api-docs' }, options, '.swagger-ui .topbar { background-color: red }'));
+app.get('/api-docs/', swaggerUi.setup(swaggerDocument, { baseURL: '/api-docs/' }, options, '.swagger-ui .topbar { background-color: red }'));
 
 app.get('/api-docs-from-url/*', ...swaggerUi.serve)
-app.get('/api-docs-from-url', swaggerUi.setup(null, { baseURL: 'api-docs-from-url' }, options, '.swagger-ui .topbar { background-color: red }', null, '/swagger.json'));
+app.get('/api-docs-from-url/', swaggerUi.setup(null, { baseURL: '/api-docs-from-url/' }, options, '.swagger-ui .topbar { background-color: red }', null, '/swagger.json'));
 
 var swaggerUiOpts = {
 	explorer: false,
 	swaggerOptions: options,
 	customCss: '.swagger-ui .topbar { background-color: blue }',
-	baseURL: 'api-docs-using-object'
+	baseURL: 'api-docs-using-object/'
 }
 
 app.get('/api-docs-using-object/*', ...swaggerUi.serve)
-app.get('/api-docs-using-object', swaggerUi.setup(swaggerDocument, swaggerUiOpts));
+app.get('/api-docs-using-object/', swaggerUi.setup(swaggerDocument, swaggerUiOpts));
 
 var swaggerUiOpts2 = {
 	explorer: false,
@@ -71,7 +73,7 @@ var swaggerUiOpts2 = {
 }
 
 app.get('/api-docs-from-url-using-object/*', ...swaggerUi.serve)
-app.get('/api-docs-from-url-using-object', swaggerUi.setup(null, Object.assign({}, swaggerUiOpts2, { baseURL: 'api-docs-from-url-using-object' })));
+app.get('/api-docs-from-url-using-object/', swaggerUi.setup(null, Object.assign({}, swaggerUiOpts2, { baseURL: '/api-docs-from-url-using-object/' })));
 
 // Restify does static file hosting differently then Express. They prepend the mount point to the
 // static directory which seems ok from some points of view but means you can't have virtual paths
@@ -84,15 +86,15 @@ app.get('/api-docs-from-url-using-object', swaggerUi.setup(null, Object.assign({
 // app.get('/api-docs-with-null', swaggerUi.setup(swaggerDocument, null, options, '.swagger-ui .topbar { background-color: orange }'));
 
 app.get('/api-docs-split/*', ...swaggerUi.serve)
-app.get('/api-docs-split', swaggerUi.setup(swaggerDocumentSplit, { baseURL: 'api-docs-split' }, options, '.swagger-ui .topbar { background-color: orange }'));
+app.get('/api-docs-split/', swaggerUi.setup(swaggerDocumentSplit, { baseURL: '/api-docs-split/' }, options, '.swagger-ui .topbar { background-color: orange }'));
 
 app.get('/api-docs-with-opts/*', ...swaggerUi.serveWithOptions({ redirect: false }))
-app.get('/api-docs-with-opts', swaggerUi.setup(swaggerDocumentSplit, { baseURL: 'api-docs-with-opts' }, options, '.swagger-ui .topbar { background-color: orange }'));
+app.get('/api-docs-with-opts/', swaggerUi.setup(swaggerDocumentSplit, { baseURL: '/api-docs-with-opts/' }, options, '.swagger-ui .topbar { background-color: orange }'));
 
-var swaggerHtml = swaggerUi.generateHTML(swaggerDocument, Object.assign({}, swaggerUiOpts, { baseURL: 'api-docs-html1' }))
+var swaggerHtml = swaggerUi.generateHTML(swaggerDocument, Object.assign({}, swaggerUiOpts, { baseURL: 'api-docs-html1/' }))
 
 app.get('/api-docs-html1/*', ...swaggerUi.serveFiles(swaggerDocument, swaggerUiOpts))
-app.get('/api-docs-html1', (req, res) => {
+app.get('/api-docs-html1/', async (req, res) => {
 	res.writeHead(200, {
 		'Content-Length': Buffer.byteLength(swaggerHtml),
 		'Content-Type': 'text/html'
@@ -101,8 +103,9 @@ app.get('/api-docs-html1', (req, res) => {
 	res.end();
 });
 
-app.use(function (req, res) {
+app.use(function (req, res, next) {
 	res.send(404, 'Page not found');
+	next(true)
 });
 
 export default app;

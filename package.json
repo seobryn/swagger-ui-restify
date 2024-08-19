@@ -1,6 +1,6 @@
 {
   "name": "swagger-ui-restify-esm",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "type": "module",
   "description": "Swagger UI Restify",
   "main": "./index.mjs",
@@ -23,7 +23,7 @@
   ],
   "private": false,
   "engines": {
-    "node": ">= v6.9.1"
+    "node": ">= v18.19.0"
   },
   "dependencies": {
     "swagger-ui-dist": "^3.18.1"
@@ -32,7 +32,7 @@
     "es6-shim": "0.35.2",
     "mocha": "^10.7.3",
     "phantom": "^6.3.0",
-    "restify": "5.0.0"
+    "restify": "^11.1.0"
   },
   "author": {
     "name": "Jose Joya",

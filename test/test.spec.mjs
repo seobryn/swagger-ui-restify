@@ -21,7 +21,7 @@ describe('integration', function () {
     phInstance.exit();
   });
 
-  it('should have API Documentation hosted at /api-docs', function (done) {
+  it('should have API Documentation hosted at /api-docs/', function (done) {
     this.timeout(30000);
     phantom.create()
       .then(function (instance) {
@@ -30,7 +30,7 @@ describe('integration', function () {
       })
       .then(function (page) {
         sitepage = page;
-        return page.open('http://localhost:3001/api-docs');
+        return page.open('http://localhost:3001/api-docs/');
       })
       .then(function (status) {
         setTimeout(function () {
@@ -44,6 +44,7 @@ describe('integration', function () {
   });
 
   it('should contain the expected elements on the page', function (done) {
+    sitepage.property("windowName").then(url => console.log("url", url))
     sitepage.property('title')
       .then(function (title) {
         assert.equal('Swagger UI', title);
@@ -52,7 +53,6 @@ describe('integration', function () {
         });
       })
       .then(function (html) {
-        console.log(html);
         assert.ok(html);
         assert.notEqual(html.indexOf('id="operations-/test-index"'), -1);
         assert.notEqual(html.indexOf('id="operations-/test-impossible"'), -1);
@@ -64,7 +64,7 @@ describe('integration', function () {
   });
 
   it('should have API Documentation hosted at /api-docs-from-url', function (done) {
-    sitepage.open('http://localhost:3001/api-docs-from-url')
+    sitepage.open('http://localhost:3001/api-docs-from-url/')
       .then(function (status) {
         setTimeout(function () {
           assert.equal('success', status);
@@ -96,7 +96,7 @@ describe('integration', function () {
   });
 
   it('should have API Documentation hosted at /api-docs-using-object', function (done) {
-    sitepage.open('http://localhost:3001/api-docs-using-object')
+    sitepage.open('http://localhost:3001/api-docs-using-object/')
       .then(function (status) {
         setTimeout(function () {
           assert.equal('success', status);
