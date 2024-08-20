@@ -1,6 +1,6 @@
 {
   "name": "swagger-ui-restify-esm",
-  "version": "5.0.5",
+  "version": "5.1.0",
   "type": "module",
   "description": "Swagger UI Restify",
   "main": "./index.mjs",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "es6-shim": "0.35.2",
     "mocha": "^10.7.3",
-    "phantom": "^6.3.0",
+    "puppeteer": "^23.1.0",
     "restify": "^11.1.0"
   },
   "author": {

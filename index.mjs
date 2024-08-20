@@ -11,6 +11,10 @@ const dName = __dirname(import.meta.url);
 
 var swaggerInit
 
+function trimQuery(url) {
+  return url.split("?")[0]
+}
+
 var generateHTML = function (swaggerDoc, opts, options, customCss, customfavIcon, swaggerUrl, customSiteTitle) {
   var isExplorer
   var customJs
@@ -73,7 +77,10 @@ var setup = function (swaggerDoc, opts, options, customCss, customfavIcon, swagg
 };
 
 function swaggerInitFn(req, res, next) {
-  if (req.url.endsWith('/swagger-ui-init.js')) {
+  if (trimQuery(req.url).endsWith('/package.json')) {
+    res.send(404, 'Not Found', { 'Content-Type': 'text/plain' });
+
+  } else if (req.url.endsWith('/swagger-ui-init.js')) {
     res.writeHead(200, {
       'Content-Length': Buffer.byteLength(swaggerInit),
       'Content-Type': 'application/javascript'
@@ -90,7 +97,9 @@ var swaggerInitFunction = function (swaggerDoc, opts) {
   var js = fs.readFileSync(dName + '/swagger-ui-init.js.tpl');
   var swaggerInitFile = js.toString().replace('<% swaggerOptions %>', stringify(opts))
   return function (req, res, next) {
-    if (req.url.endsWith('/swagger-ui-init.js')) {
+    if (trimQuery(req.url).endsWith('/package.json')) {
+      res.send(404, 'Not Found', { 'Content-Type': 'text/plain' });
+    } else if (req.url.endsWith('/swagger-ui-init.js')) {
       res.writeHead(200, {
         'Content-Length': Buffer.byteLength(swaggerInitFile),
         'Content-Type': 'application/javascript'

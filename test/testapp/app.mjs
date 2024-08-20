@@ -1,21 +1,14 @@
 import restify from 'restify';
 import swaggerUi from '../../index.mjs';
-import swaggerDocument from './swagger.json' assert {type: 'json'}
-import swaggerDocumentSplit from './swagger-split.json'  assert {type: 'json'}
+import swaggerDocumentSplit from './swagger-split.json' assert { type: 'json' };
+import swaggerDocument from './swagger.json' assert { type: 'json' };
+import { __dirname } from '../../utils/fs-utils.mjs'
 
-var app = restify.createServer({});
+var app = restify.createServer({
+	name: 'testapp'
+});
 
 app.use(restify.plugins.bodyParser());
-
-app.use((req, res, next) => {
-	if (req.url === '/favicon.ico') {
-		return res.sendFile(dName + '/favicon.ico');
-	} else if (req.url === '/swagger.json') {
-		return res.sendFile(dName + '/swagger.json');
-	} else {
-		next(false);
-	}
-});
 
 var options = {
 	validatorUrl: null,
@@ -40,11 +33,12 @@ var options = {
 
 app.post('/test', (req, res, next) => {
 	res.send(200, { status: 'OK' });
-	return next(false)
+	next();
 });
+
 app.get('/bar', (req, res, next) => {
-	res.send({ status: 'OKISH' });
-	return next(false)
+	res.send(200, { status: 'OKISH' });
+	next();
 });
 
 app.get('/api-docs/*', ...swaggerUi.serve)
@@ -103,9 +97,7 @@ app.get('/api-docs-html1/', async (req, res) => {
 	res.end();
 });
 
-app.use(function (req, res, next) {
-	res.send(404, 'Page not found');
-	next(true)
-});
-
+app.get('/*', (_, res, next) => {
+	res.send(404, 'Not found')
+})
 export default app;
