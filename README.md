@@ -168,6 +168,6 @@ server.get("/docs/", swaggerUi.setup(swaggerDocument, { baseURL: 'docs/' }))
 
 ## Testing
 
-* Install phantom
+* Install Puppeteer
 * `npm install`
 * `npm test`
